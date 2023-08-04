@@ -17,7 +17,7 @@ CREATE TABLE quiz(
 );
 
 CREATE TABLE question(
-    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT, => 0
     question TEXT NOT NULL,
     idquiz VARCHAR(30) NOT NULL,
     FOREIGN KEY(idquiz) REFERENCES quiz (id)
@@ -25,10 +25,10 @@ CREATE TABLE question(
 
 CREATE TABLE option(
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    option VARCHAR(1) NOT NULL,
+    option VARCHAR(1) NOT NULL, 
     answer VARCHAR(100) NOT NULL,
-    qualification  int NOT NULL,
-    idquestion int NOT NULL,
+    qualification  int NOT NULL, 
+    idquestion int NOT NULL, 
     FOREIGN KEY(idquestion) REFERENCES question (id)
 );
 
