@@ -7,7 +7,7 @@
     width: 100vw;
 }
 .Div-LoginRegister form{
-    height: 450px;
+    height: 300px;
     width: 380px;
     padding: 10px;
     color: #fff;
@@ -15,7 +15,6 @@
     border: 2px solid #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px #0e0e0e;
-    cursor: pointer;
     transition: .5s;
 }
 .Div-LoginRegister form:hover{
@@ -47,4 +46,27 @@
 .InputLabel input:focus~label,
 .InputLabel input:valid~label{
     transform: translateY(0) translateX(0);
+}
+.Div-Form-Men{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+}
+.Div-Form-Men a{
+    text-decoration: none;
+}
+.Div-Botom-loginRegister{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+.Div-Botom-loginRegister button{
+    margin-top: 10px;
+    width: 80%;
+    height: 35px;
+    cursor: pointer;
+    font-size: .9em;
 }
