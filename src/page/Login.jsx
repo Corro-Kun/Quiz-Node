@@ -14,10 +14,12 @@ function Login() {
                     <label>Contraseña</label>
                     <input type="password" required />
                 </div>
-                <div>
-                    <p>¿No tienes cuenta? <a href="#">Registrarse</a></p>
+                <div className="Div-Form-Men" >
+                    <p>¿No tienes cuenta?</p> <a href="#">Registrarse</a>
                 </div>
-                <button type="submit">Entrar</button>
+                <div className="Div-Botom-loginRegister" >
+                    <button type="submit">Entrar</button>
+                </div>
             </form>
         </div>
     );   
