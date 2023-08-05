@@ -1,0 +1,34 @@
+.contener-warp{
+    display: flex;
+    background-color: #313131;
+    height: 100vh;
+    width: 85%;
+    flex-direction: column;
+    overflow: auto;
+}
+.Contener-Bar-Top{
+    display: flex;
+    height: 50px;
+    background-color: #474747;
+    width: 100%;
+    border-bottom: 1px solid #dddddd;
+    align-items: center;
+    justify-content: center;
+}
+.Contener-Bar-Top input{
+    height: 30px;
+    width: 70%;
+    padding: 0px 10px;
+    background-color: #313131;
+    border: 1px solid #dddddd;
+    outline: none;
+    color: #e9e9e9;
+    border-radius: 5px;
+    text-align: center;
+}
+.Warp-Render{
+    padding: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
