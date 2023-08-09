@@ -10,9 +10,9 @@ function App() {
     <UseAuth>
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<Home />} />
           <Route path="/" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<Register />} /> 
+          <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </UseAuth>

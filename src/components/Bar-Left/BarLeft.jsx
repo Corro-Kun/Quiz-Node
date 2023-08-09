@@ -1,8 +1,20 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import './BarLeft-Style.css';
 import { Link } from "react-router-dom";
+import {profile} from "../../api/auth.js";
 
 function BarLeft() {
+
+    const [DataProfile, setDataProfile] = useState({name: '', email: ''});
+
+    useEffect(() => {
+        const FetchProfile = async () =>{
+            const {data} = await profile();
+            setDataProfile(data[0]);
+        }
+        FetchProfile();
+    }, []);
+
     return(
         <div className="Bar-Home" >
             <div className="Render-Bar-Home">
@@ -16,7 +28,8 @@ function BarLeft() {
                 </div>
             </div>
             <div className="Bar-Home-Botom">
-                <h3>Nombre de usuario</h3>
+                <h3>{DataProfile.name}</h3>
+                <p>{DataProfile.email}</p>
             </div>
         </div>
     );
