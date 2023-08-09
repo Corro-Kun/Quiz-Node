@@ -1,20 +1,10 @@
-import React,{useEffect, useState} from "react";
+import React from "react";
 import './BarLeft-Style.css';
 import { Link } from "react-router-dom";
-import {profile} from "../../api/auth.js";
+import {useQuizContext} from "../../Context/quiz.jsx";
 
 function BarLeft() {
-
-    const [DataProfile, setDataProfile] = useState({name: '', email: ''});
-
-    useEffect(() => {
-        const FetchProfile = async () =>{
-            const {data} = await profile();
-            setDataProfile(data[0]);
-        }
-        FetchProfile();
-    }, []);
-
+    const {DataProfile} = useQuizContext();
     return(
         <div className="Bar-Home" >
             <div className="Render-Bar-Home">
