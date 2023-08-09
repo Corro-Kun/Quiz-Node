@@ -33,8 +33,7 @@ export const login = async (req, res) =>{
 
         const found = await sql.query("SELECT * FROM user WHERE email = ?",[email]);
         const result1 = found[0];
-
-        if(!result1) return res.json({message: 'No se encontro ningun usuario'});
+        if(result1.length === 0) return res.status(500).json({message: 'No se encontro ningun usuario'});
 
         const passwordValue = result1[0].password;
         const resultAcces = await crypto.compare(password, passwordValue);
@@ -47,7 +46,7 @@ export const login = async (req, res) =>{
 
         res.status(200).json({message: 'bienvenido '+ result1[0].name});
     } catch (error) {
-        res.status(500).json({message: 'Ocurrio un error'});    
+        res.status(500).json({message: 'Ocurrio un error: '+ error});    
     }
 
 }
