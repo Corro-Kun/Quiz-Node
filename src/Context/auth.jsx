@@ -1,5 +1,5 @@
 import React,{createContext, useContext, useEffect, useState} from "react";
-import {login} from "../api/auth.js";
+import {login, register} from "../api/auth.js";
 
 export const AuthContext = createContext();
 
@@ -8,7 +8,11 @@ export function useAuthContext() {
 }
 
 export function UseAuth({children}) {
-    const [DataRegister, setDataRegister] = useState({});
+    const [DataRegister, setDataRegister] = useState({
+        name: '',
+        email: '',
+        password: ''
+    });
     const [DataLogin, setDataLogin] = useState({
         email: '',
         password: ''
@@ -38,8 +42,26 @@ export function UseAuth({children}) {
         }
     }
 
+    const ChangerRegister = ({target: {name, value}}) =>{
+        setDataRegister({...DataRegister, [name]: value});
+        setVerficEmail(false);
+    }
+
+    const HandleRegister = async (e) =>{
+        e.preventDefault();
+        try {
+            await register(DataRegister);
+            setVerficUser(true);
+        } catch (error) {
+            const {message} = error.response.data;
+            if(message === 'Este usuario ya existe'){
+                setVerficEmail(true);
+            }
+        }        
+    }
+
     return(
-        <AuthContext.Provider value={{ChangerLogin, HandleLogin, VerficPass, VerficEmail, VerficUser}} >
+        <AuthContext.Provider value={{ChangerLogin, HandleLogin, VerficPass, VerficEmail, VerficUser, ChangerRegister, HandleRegister}} >
             {children}
         </AuthContext.Provider>
     );
