@@ -16,6 +16,7 @@ App.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }))
+App.disable('x-powered-by');
 App.use(auth);
 App.use(quiz);
 

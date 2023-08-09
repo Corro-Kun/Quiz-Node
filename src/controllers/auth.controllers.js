@@ -11,7 +11,7 @@ export const register = async (req, res) =>{
         const found = await sql.query("SELECT * FROM user WHERE email = ?",[email])
         const result1 = found[0];
 
-        if(result1[0]) return res.status(500).json({message: 'Este usuario ya existe'});
+        if(result1.length > 0) return res.status(500).json({message: 'Este usuario ya existe'});
 
         const passwordHash = await crypto.hash(password, 10);
 
