@@ -1,0 +1,57 @@
+.Render-Quiz{
+    display: flex;
+    padding: 20px 20px;
+    height: 100vh;
+    width: 100vw;
+    overflow: auto;
+    background-color: #474747;
+    justify-content: center;
+}
+.Main-Quiz{
+    width: 50%;
+    color: #e9e9e9;
+    background-color: #313131;
+    border: 2px solid #dddddd;
+    box-shadow: 0 0 20px #000; 
+}
+.H2-Title{
+    margin-top: 10px;
+    text-align: center;
+}
+.P-Author{
+    text-align: center;
+}
+
+/* Tamaño de celulares medio */
+@media (max-width: 500px) {
+    .Main-Quiz{
+        width: 95%;
+    }
+}
+
+/* Tamaño de celulares grande */
+@media (max-width: 768px) {
+    .Main-Quiz{
+        width: 90%;
+    }
+}
+.Main-Quiz form{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: auto;
+} 
+.button-render-quiz{
+    display: flex;
+    padding: 15px;
+    justify-content: center;
+    justify-items: center;
+}
+.button-render-quiz button{
+    padding: 8px 12px 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

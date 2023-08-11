@@ -4,6 +4,7 @@ import Home from "./page/Home.jsx";
 import Login from "./page/Login.jsx";
 import Register from "./page/Register.jsx";
 import { UseAuth } from "./Context/auth.jsx";
+import Quiz from "./page/Quiz.jsx";
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} /> 
           <Route path="/home" element={<Home />} />
+          <Route path="/new/quiz" element={<h2>Crear Quiz</h2>} />
+          <Route path="/quiz/:id" element={<Quiz />} />
+          <Route path="*" element={<h1>404</h1>} />
         </Routes>
       </BrowserRouter>
     </UseAuth>

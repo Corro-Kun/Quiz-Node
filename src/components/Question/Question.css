@@ -1,0 +1,13 @@
+.Render-Question{
+    margin: 10px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+}
+.render-options-quiz{
+    margin: 10px;
+}
+.render-options-quiz input{
+    cursor: pointer;
+    margin-right: 3px;
+}

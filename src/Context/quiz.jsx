@@ -1,6 +1,6 @@
 import React,{useContext, createContext, useState, useEffect} from "react";
 import {profile} from "../api/auth.js";
-import { getQuizzes } from "../api/quiz.js";
+import { getQuizzes, getQuiz } from "../api/quiz.js";
 
 const QuizContext = createContext();
 
@@ -11,6 +11,7 @@ export function useQuizContext(){
 export function QuizProvider({children}){
     const [DataProfile, setDataProfile] = useState({name: '', email: ''});
     const [Quizzes, setQuizzes] = useState([]);
+    const [Quiz, setQuiz] = useState([]);
 
     useEffect(() => {
         FetchProfile();
@@ -27,8 +28,22 @@ export function QuizProvider({children}){
         setQuizzes(data);
     }
 
+    const FilterQuizzes = ({target:{value}})=>{
+        if(value === ''){
+            FetchQuizzes();
+        }else{
+            setQuizzes(Quizzes.filter((Quizzes) => Quizzes.title.toLowerCase().includes(value.toLowerCase())));
+        }
+    }
+
+    const FetchQuiz = async (id) =>{
+        const {data} = await getQuiz(id);
+        setQuiz(data);
+        console.log(data);
+    }
+
     return(
-        <QuizContext.Provider value={{DataProfile, Quizzes}} >
+        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz}} >
             {children}
         </QuizContext.Provider>
     );
