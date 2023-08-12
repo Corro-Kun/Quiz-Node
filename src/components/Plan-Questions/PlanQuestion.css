@@ -16,3 +16,62 @@
     box-shadow: 0 0 20px #000;
     border-radius: 5px;
 }
+.Render-Add-Quiz form{
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    overflow: auto;
+}
+.Scrol-Add-Quiz{
+    height: 100%;
+    overflow: auto;   
+}
+.Title-Add-Quiz-Div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.Question-add-question-function{
+    padding: 10px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #141414;
+    border-top: 1px solid #141414;
+}
+.Question-add-question-function label{
+    margin-bottom: 5px;
+}
+.Question-add-question-function input{
+    padding: 5px 10px;
+    border: 1px solid #141414;
+    border-radius: 5px;
+    outline: none;
+}
+.AddQuestions-button{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.AddQuestions-button button{
+    padding: 8px 10px 8px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+.ButtonSubmit-Form-Add{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ButtonSubmit-Form-Add button{
+    padding: 8px 10px 8px 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}

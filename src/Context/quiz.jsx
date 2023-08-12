@@ -42,8 +42,24 @@ export function QuizProvider({children}){
         console.log(data);
     }
 
+    const [NumQuestion, setNumQuestion] = useState(1);
+    const [QuestionsInput, setQuestionsInput] = useState([]);
+
+    function AddQuestion(){
+        let Question = [];
+        for(let a = 0; a < NumQuestion; a++){
+            Question.push(
+                <div key={a} className="Question-add-question-function" >
+                    <label>{a+1}. Escribe tu pregunta:</label>
+                    <input type="text" />
+                </div>
+            );
+        }
+        return Question;
+    }
+
     return(
-        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz}} >
+        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz, NumQuestion, setNumQuestion, AddQuestion}} >
             {children}
         </QuizContext.Provider>
     );
