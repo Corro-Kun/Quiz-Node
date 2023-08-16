@@ -43,7 +43,7 @@ export function QuizProvider({children}){
     }
 
     const [NumQuestion, setNumQuestion] = useState(1);
-    const [QuestionsInput, setQuestionsInput] = useState([]);
+    const [Saveopciones, setSaveopciones] = useState([0]);
 
     function AddQuestion(){
         let Question = [];
@@ -52,10 +52,56 @@ export function QuizProvider({children}){
                 <div key={a} className="Question-add-question-function" >
                     <label>{a+1}. Escribe tu pregunta:</label>
                     <input type="text" />
+                    <div className="Question-function-Options">
+                        {AddAnswerQuestion(a)}
+                        <button onClick={() => {
+                            let newdata = [...Saveopciones];
+                            if(!newdata[a]){
+                                newdata[a] = 0;
+                            }
+                            newdata[a] = newdata[a] + 1;
+                            setSaveopciones(newdata);
+                        }} >Añadir respuestas</button>
+                    </div>
                 </div>
             );
         }
         return Question;
+    }
+    function AddAnswerQuestion(i){
+        let Answer = [];
+        for(let a = 0; a < Saveopciones[i]; a++){
+            if(a === 0){
+                Answer.push(
+                    <div key={a} >
+                        <label>A. </label>
+                        <input type="text" />
+                    </div>
+                );
+            }else if(a === 1){
+                Answer.push(
+                    <div key={a} >
+                        <label>B. </label>
+                        <input type="text" />
+                    </div>
+                );
+            }else if(a === 2){
+                Answer.push(
+                    <div key={a} >
+                        <label>C. </label>
+                        <input type="text" />
+                    </div>
+                );                
+            }else if(a === 3){
+                Answer.push(
+                    <div key={a} >
+                        <label>D. </label>
+                        <input type="text" />
+                    </div>
+                );
+            }
+        }
+        return Answer;
     }
 
     return(

@@ -7,7 +7,7 @@ function PlanQuestions() {
     return (
         <div className='Main-Add-Quiz'>
             <div className='Render-Add-Quiz'>
-                <form action="#">
+                <form onSubmit={(e)=> e.preventDefault()}>
                     <div className='Scrol-Add-Quiz' >
                         <div className='Title-Add-Quiz-Div' >
                             <h2>Añade tus preguntas</h2>

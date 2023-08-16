@@ -75,3 +75,15 @@
     border: none;
     border-radius: 5px;
 }
+.Question-function-Options{
+    margin: 10px 0px 0px 0px;
+}
+.Question-add-question-function button{
+    cursor: pointer;
+    padding: 8px 10px 8px 10px;
+    border: none;
+    border-radius: none;
+}
+.Question-function-Options div{
+    margin-bottom: 10px;
+}
