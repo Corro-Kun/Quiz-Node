@@ -31,8 +31,10 @@ export function QuizProvider({children}){
     const FilterQuizzes = ({target:{value}})=>{
         if(value === ''){
             FetchQuizzes();
+        }else if(addEventListener === 'keyBackspace'){
+            FetchQuizzes();
         }else{
-            setQuizzes(Quizzes.filter((Quizzes) => Quizzes.title.toLowerCase().includes(value.toLowerCase())));
+            setQuizzes(Quizzes.filter((Quizzes)=> Quizzes.title.toLowerCase().includes(value.toLowerCase()) ));
         }
     }
 
@@ -44,14 +46,13 @@ export function QuizProvider({children}){
 
     const [NumQuestion, setNumQuestion] = useState(1);
     const [Saveopciones, setSaveopciones] = useState([0]);
-
     function AddQuestion(){
         let Question = [];
         for(let a = 0; a < NumQuestion; a++){
             Question.push(
                 <div key={a} className="Question-add-question-function" >
                     <label>{a+1}. Escribe tu pregunta:</label>
-                    <input type="text" />
+                    <input type="text" name="question" onChange={(e) => changerQuestioQuiz(e,a)} />
                     <div className="Question-function-Options">
                         {AddAnswerQuestion(a)}
                         <button onClick={() => {
@@ -62,6 +63,7 @@ export function QuizProvider({children}){
                             newdata[a] = newdata[a] + 1;
                             setSaveopciones(newdata);
                         }} >Añadir respuestas</button>
+
                     </div>
                 </div>
             );
@@ -75,28 +77,28 @@ export function QuizProvider({children}){
                 Answer.push(
                     <div key={a} >
                         <label>A. </label>
-                        <input type="text" />
+                        <input type="text" onChange={(e) => chagerOptionsQuiz(e,i,a)} />
                     </div>
                 );
             }else if(a === 1){
                 Answer.push(
                     <div key={a} >
                         <label>B. </label>
-                        <input type="text" />
+                        <input type="text" onChange={(e) => chagerOptionsQuiz(e,i,a)} />
                     </div>
                 );
             }else if(a === 2){
                 Answer.push(
                     <div key={a} >
                         <label>C. </label>
-                        <input type="text" />
+                        <input type="text" onChange={(e)=> chagerOptionsQuiz(e,i,a)}/>
                     </div>
                 );                
             }else if(a === 3){
                 Answer.push(
                     <div key={a} >
                         <label>D. </label>
-                        <input type="text" />
+                        <input type="text" onChange={(e)=> chagerOptionsQuiz(e, i, a)} />
                     </div>
                 );
             }
@@ -104,8 +106,56 @@ export function QuizProvider({children}){
         return Answer;
     }
 
+    const [Quizadd, setQuizadd] = useState({
+        title: '',
+        questions:[
+            {
+                question: 'a',
+                options: [
+                    {
+                        option: '',
+                        qualification: 0
+                    }
+                ]
+            }
+        ]
+    });
+
+    function changerTitleQuiz({target:{name, value}}){
+        setQuizadd({...Quizadd, [name]: value});
+    }
+
+    function changerQuestioQuiz({target:{name, value}}, i){
+        let newdata = {...Quizadd};
+        if(!newdata.questions[i]){
+            newdata.questions[i] =  {
+                question: '',
+                options: [
+                    {
+                        option: '',
+                        qualification: 0
+                    }
+                ]
+            }
+        }
+        newdata.questions[i][name] = value;
+        setQuizadd(newdata);
+    }
+
+    function chagerOptionsQuiz({target:{value}}, indexQuestions, indexOptions){
+        let newdata = {...Quizadd};
+        if(!newdata.questions[indexQuestions].options[indexOptions]){
+            newdata.questions[indexQuestions].options[indexOptions] = {
+                option: '',
+                qualification: 0
+            }
+        }
+        newdata.questions[indexQuestions].options[indexOptions].option = value;
+        setQuizadd(newdata);
+    }
+
     return(
-        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz, NumQuestion, setNumQuestion, AddQuestion}} >
+        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz, NumQuestion, setNumQuestion, AddQuestion, changerTitleQuiz}} >
             {children}
         </QuizContext.Provider>
     );

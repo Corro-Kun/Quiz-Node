@@ -3,7 +3,7 @@ import './PlanQuestion.css';
 import { useQuizContext } from '../../Context/quiz';
 
 function PlanQuestions() {
-    const {NumQuestion, setNumQuestion, AddQuestion} = useQuizContext();
+    const {NumQuestion, setNumQuestion, AddQuestion, changerTitleQuiz} = useQuizContext();
     return (
         <div className='Main-Add-Quiz'>
             <div className='Render-Add-Quiz'>
@@ -11,6 +11,8 @@ function PlanQuestions() {
                     <div className='Scrol-Add-Quiz' >
                         <div className='Title-Add-Quiz-Div' >
                             <h2>Añade tus preguntas</h2>
+                            <h3>Agrega un titulo a tu quiz</h3>
+                            <input type="text" name="title" onChange={(e)=> changerTitleQuiz(e)}  />
                             <p>Preguntas en total: {NumQuestion}</p>
                         </div>
                         {AddQuestion()}

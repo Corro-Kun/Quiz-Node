@@ -34,6 +34,13 @@
     align-items: center;
     justify-content: center;
 }
+.Title-Add-Quiz-Div input{
+    margin-top: 5px;
+    padding: 5px 10px;
+    border: 1px solid #141414;
+    border-radius: 5px;
+    outline: none;
+}
 .Question-add-question-function{
     padding: 10px;
     margin: 10px 0;
