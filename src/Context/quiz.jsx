@@ -78,6 +78,7 @@ export function QuizProvider({children}){
                     <div key={a} >
                         <label>A. </label>
                         <input type="text" onChange={(e) => chagerOptionsQuiz(e,i,a)} />
+                        <input type="radio" name={i} onChange={() => changerQualificationQuiz(i,a)} />
                     </div>
                 );
             }else if(a === 1){
@@ -85,6 +86,7 @@ export function QuizProvider({children}){
                     <div key={a} >
                         <label>B. </label>
                         <input type="text" onChange={(e) => chagerOptionsQuiz(e,i,a)} />
+                        <input type="radio" name={i} onChange={() => changerQualificationQuiz(i, a)} />
                     </div>
                 );
             }else if(a === 2){
@@ -92,6 +94,7 @@ export function QuizProvider({children}){
                     <div key={a} >
                         <label>C. </label>
                         <input type="text" onChange={(e)=> chagerOptionsQuiz(e,i,a)}/>
+                        <input type="radio" name={i} onChange={() => changerQualificationQuiz(i, a)} />
                     </div>
                 );                
             }else if(a === 3){
@@ -99,6 +102,7 @@ export function QuizProvider({children}){
                     <div key={a} >
                         <label>D. </label>
                         <input type="text" onChange={(e)=> chagerOptionsQuiz(e, i, a)} />
+                        <input type="radio" name={i} onChange={() => changerQualificationQuiz(i,a)} />
                     </div>
                 );
             }
@@ -152,6 +156,15 @@ export function QuizProvider({children}){
         }
         newdata.questions[indexQuestions].options[indexOptions].option = value;
         setQuizadd(newdata);
+        console.log(Quizadd)
+    }
+
+    function changerQualificationQuiz(indexQuestions, indexOptions){
+        let newdata = {...Quizadd};
+        for(let a = 0 ; a < newdata.questions[indexQuestions].options.length; a++){
+            newdata.questions[indexQuestions].options[a].qualification = 0;
+        }
+        newdata.questions[indexQuestions].options[indexOptions].qualification = 1;
     }
 
     return(
