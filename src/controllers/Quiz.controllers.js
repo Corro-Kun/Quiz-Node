@@ -15,12 +15,48 @@ export const AllQuiz = async (req,res)=>{
 export const CreateQuiz = async (req, res) =>{
     try {
         const id = req.user.id;
-        const ID = genID(30);
+        const IDquiz = genID(30);
         const title = req.body.title;
+        const questions = req.body.questions;
 
-        await sql.query('insert into quiz (id, title, iduser) values (?,?,?)',[ID, title, id]);
+        // crear el quiz        
+        const result = await sql.query('insert into quiz (id, title, iduser) values (?,?,?)',[IDquiz, title, id]);
 
-        res.status(200).json({message:'Quiz creado con exito', id:ID});
+        for(let i = 0; i < questions.length; i++){
+            // crear la pregunta
+            const question = questions[i].question;
+            const result = await sql.query('insert into question (question, idquiz) values (?,?)',[question, IDquiz]);
+            const idQuestion = result[0].insertId;
+            // crea las opciones
+            const options = questions[i].options;
+            for(let a = 0; a < options.length; a++){
+
+                switch (a) {
+                    case 0:
+                            const A = 'A';
+                            await sql.query('insert into option (option, answer, qualification, idquestion) values (?,?,?,?)',[A, options[a].option, options[a].qualification, idQuestion]);
+                        break;
+                    case 1:
+                            const B = 'B';
+                            await sql.query('insert into option (option, answer, qualification, idquestion) values (?,?,?,?)',[B, options[a].option, options[a].qualification, idQuestion]);
+                        break;
+                    case 2:
+                            const C = 'C';
+                            await sql.query('insert into option (option, answer, qualification, idquestion) values (?,?,?,?)',[C, options[a].option, options[a].qualification, idQuestion]);
+                        break;
+                    case 3:
+                            const D = 'D';
+                            await sql.query('insert into option (option, answer, qualification, idquestion) values (?,?,?,?)',[D, options[a].option, options[a].qualification, idQuestion]);
+                        break;
+                    default:
+                        res.status(400).json({message:'No se puede crear mas opciones'});
+                        break;
+                }
+            }
+
+        }
+
+        res.status(200).json({message: 'Quiz creado con exito'});
     } catch (error) {
         res.status(500).json({message:'Ocurrio un error, '+error});
     }
@@ -37,59 +73,7 @@ export const MyQuiz = async (req, res) =>{
         res.satatus(500).json({message:'Ocurrio un error, '+error});
     }   
 }
-export const CreateQuestion = async (req, res) =>{
-    try {
-        const id = req.params.id;
-        const question = req.body.question;
 
-        const result = await sql.query('insert into question (question, idquiz) values (?,?)',[question, id]);
-
-        res.status(200).json({message:'Pregunta creada con exito', id:result[0].insertId});
-    } catch (error) {
-        res.status(500).json({message:'Ocurrio un error, '+error});
-    }
-}
-export const CreateOpcion = async (req, res) =>{
-    try {
-        const answer = req.body.answer;
-        const qualification = req.body.qualification;
-        const idquestion = req.params.id;
-
-        const [valid] = await sql.query('select * from option where idquestion = ?',[req.params.id]);
-
-        switch (valid.length) {
-            case 0:
-                    const A = 'A';
-                    const [result1] = await sql.query('insert into option (option, answer, qualification, idquestion) values (?,?,?,?)',[A, answer, qualification, idquestion]);
-                    
-                    res.status(200).json({message:'Opcion creada con exito', id:result1.insertId});
-                break;
-            case 1:
-                    const B = 'B';
-                    const [result2] = await sql.query('insert into option (option, answer, qualification, idquestion) values (?,?,?,?)',[B, answer, qualification, idquestion]);
-                    
-                    res.status(200).json({message:'Opcion creada con exito', id:result2.insertId});
-                break;
-            case 2:
-                    const C = 'C';
-                    const [result3] = await sql.query('insert into option (option, answer, qualification, idquestion) values (?,?,?,?)',[C, answer, qualification, idquestion]);
-                    
-                    res.status(200).json({message:'Opcion creada con exito', id:result3.insertId});
-                break;
-            case 3:
-                    const D = 'D';
-                    const [result4] = await sql.query('insert into option (option, answer, qualification, idquestion) values (?,?,?,?)',[D, answer, qualification, idquestion]);
-                    
-                    res.status(200).json({message:'Opcion creada con exito', id:result4.insertId});
-                break;
-            default:
-                res.status(400).json({message:'No se puede crear mas opciones'});
-                break;
-        }
-    } catch (error) {
-        res.status(500).json({message:'Ocurrio un error, '+error});   
-    }
-}
 
 export const ViewQuiz = async (req, res) =>{
     try {
