@@ -1,6 +1,7 @@
 import React,{useContext, createContext, useState, useEffect} from "react";
 import {profile} from "../api/auth.js";
-import { getQuizzes, getQuiz } from "../api/quiz.js";
+import { getQuizzes, getQuiz, postQuiz as postQ } from "../api/quiz.js";
+import {useNavigate} from "react-router-dom"
 
 const QuizContext = createContext();
 
@@ -9,6 +10,7 @@ export function useQuizContext(){
 };
 
 export function QuizProvider({children}){
+    const Navegate = useNavigate();
     const [DataProfile, setDataProfile] = useState({name: '', email: ''});
     const [Quizzes, setQuizzes] = useState([]);
     const [Quiz, setQuiz] = useState([]);
@@ -52,10 +54,10 @@ export function QuizProvider({children}){
             Question.push(
                 <div key={a} className="Question-add-question-function" >
                     <label>{a+1}. Escribe tu pregunta:</label>
-                    <input type="text" name="question" onChange={(e) => changerQuestioQuiz(e,a)} />
+                    <input type="text" required name="question" onChange={(e) => changerQuestioQuiz(e,a)} />
                     <div className="Question-function-Options">
                         {AddAnswerQuestion(a)}
-                        <button onClick={() => {
+                        <button type="button" onClick={() => {
                             let newdata = [...Saveopciones];
                             if(!newdata[a]){
                                 newdata[a] = 0;
@@ -77,32 +79,32 @@ export function QuizProvider({children}){
                 Answer.push(
                     <div key={a} >
                         <label>A. </label>
-                        <input type="text" onChange={(e) => chagerOptionsQuiz(e,i,a)} />
-                        <input type="radio" name={i} onChange={() => changerQualificationQuiz(i,a)} />
+                        <input type="text" required onChange={(e) => chagerOptionsQuiz(e,i,a)} />
+                        <input type="radio" required name={i} onChange={() => changerQualificationQuiz(i,a)} />
                     </div>
                 );
             }else if(a === 1){
                 Answer.push(
                     <div key={a} >
                         <label>B. </label>
-                        <input type="text" onChange={(e) => chagerOptionsQuiz(e,i,a)} />
-                        <input type="radio" name={i} onChange={() => changerQualificationQuiz(i, a)} />
+                        <input type="text" required onChange={(e) => chagerOptionsQuiz(e,i,a)} />
+                        <input type="radio" required name={i} onChange={() => changerQualificationQuiz(i, a)} />
                     </div>
                 );
             }else if(a === 2){
                 Answer.push(
                     <div key={a} >
                         <label>C. </label>
-                        <input type="text" onChange={(e)=> chagerOptionsQuiz(e,i,a)}/>
-                        <input type="radio" name={i} onChange={() => changerQualificationQuiz(i, a)} />
+                        <input type="text" required onChange={(e)=> chagerOptionsQuiz(e,i,a)}/>
+                        <input type="radio" required name={i} onChange={() => changerQualificationQuiz(i, a)} />
                     </div>
                 );                
             }else if(a === 3){
                 Answer.push(
                     <div key={a} >
                         <label>D. </label>
-                        <input type="text" onChange={(e)=> chagerOptionsQuiz(e, i, a)} />
-                        <input type="radio" name={i} onChange={() => changerQualificationQuiz(i,a)} />
+                        <input type="text" required onChange={(e)=> chagerOptionsQuiz(e, i, a)} />
+                        <input type="radio" required name={i} onChange={() => changerQualificationQuiz(i,a)} />
                     </div>
                 );
             }
@@ -156,7 +158,6 @@ export function QuizProvider({children}){
         }
         newdata.questions[indexQuestions].options[indexOptions].option = value;
         setQuizadd(newdata);
-        console.log(Quizadd)
     }
 
     function changerQualificationQuiz(indexQuestions, indexOptions){
@@ -167,8 +168,18 @@ export function QuizProvider({children}){
         newdata.questions[indexQuestions].options[indexOptions].qualification = 1;
     }
 
+    async function postQuiz(e){
+        try {
+            e.preventDefault();
+            await postQ(Quizadd);
+            Navegate('/home');
+        } catch (error) {
+            console.log(error.response.data);    
+        }
+    }
+
     return(
-        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz, NumQuestion, setNumQuestion, AddQuestion, changerTitleQuiz}} >
+        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz, NumQuestion, setNumQuestion, AddQuestion, changerTitleQuiz, postQuiz}} >
             {children}
         </QuizContext.Provider>
     );
