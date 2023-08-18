@@ -1,6 +1,6 @@
 import React,{useContext, createContext, useState, useEffect} from "react";
 import {profile} from "../api/auth.js";
-import { getQuizzes, getQuiz, postQuiz as postQ } from "../api/quiz.js";
+import { getQuizzes, getQuiz, postQuiz as postQ , postAnswer, getAnswer} from "../api/quiz.js";
 import {useNavigate} from "react-router-dom"
 
 const QuizContext = createContext();
@@ -225,13 +225,29 @@ export function QuizProvider({children}){
         setAnswer(newdata);
     }
 
-    function handleSubmitAnswer(e){
-        e.preventDefault();
-        console.log(Answer);
+    async function handleSubmitAnswer(e){
+        try {
+            e.preventDefault();
+            const result = await postAnswer(Answer.Answers[0].idquiz,Answer);
+            Navegate('/home');
+        } catch (error) {
+            console.log(error.response.data);
+        }
     }
 
+    const [ListAnswers, setListAnswers] = useState([]);
+
+    async function FetchAnswer(){
+        const {data} =  await getAnswer()
+        setListAnswers(data);
+    }
+
+    useEffect(() =>{
+        FetchAnswer();
+    },[]);
+
     return(
-        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz, NumQuestion, setNumQuestion, AddQuestion, changerTitleQuiz, postQuiz ,changerAnswer, handleSubmitAnswer}} >
+        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz, NumQuestion, setNumQuestion, AddQuestion, changerTitleQuiz, postQuiz ,changerAnswer, handleSubmitAnswer, ListAnswers}} >
             {children}
         </QuizContext.Provider>
     );

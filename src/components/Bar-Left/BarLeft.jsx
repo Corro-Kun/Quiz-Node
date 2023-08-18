@@ -12,9 +12,9 @@ function BarLeft() {
                     <h2>Quiz-Kun</h2>
                 </div>
                 <div className="List-Bar" >
-                    <ul><Link>Quiz</Link></ul>
+                    <ul><Link to={'/home'} >Quiz</Link></ul>
                     <ul><Link>My Quiz</Link></ul>
-                    <ul><Link>Qualified Quiz</Link></ul>
+                    <ul><Link to={'/answer'} >Qualified Quiz</Link></ul>
                 </div>
             </div>
             <div className="Bar-Home-Botom">
