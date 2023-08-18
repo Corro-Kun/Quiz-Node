@@ -1,7 +1,7 @@
 import React from "react";
 import "./Question.css";
 
-function Question({number,title, options}){
+function Question({number,title, options, indexQ, functionA}){
     return(
         <div className="Render-Question" >
             <div>
@@ -11,7 +11,7 @@ function Question({number,title, options}){
                 {
                     options?.map((options, i)=>(
                         <div className="render-options-quiz" key={i} >
-                            <input type="radio" name={title} id={i} value={options.answer} required/>
+                            <input type="radio" name={title} id={i} value={options.answer} required onChange={() => functionA(indexQ, i)} />
                             <label htmlFor={options.option}>{options.option}. {options.answer}</label>
                         </div>
                     ))

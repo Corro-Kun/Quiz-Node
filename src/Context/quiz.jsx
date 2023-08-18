@@ -43,7 +43,6 @@ export function QuizProvider({children}){
     const FetchQuiz = async (id) =>{
         const {data} = await getQuiz(id);
         setQuiz(data);
-        console.log(data);
     }
 
     const [NumQuestion, setNumQuestion] = useState(1);
@@ -178,8 +177,61 @@ export function QuizProvider({children}){
         }
     }
 
+    /*
+
+    option VARCHAR(1) NOT NULL,   v/
+    answer VARCHAR(100) NOT NULL, v/
+    qualification int NOT NULL,  v/
+    idquiz VARCHAR(30) NOT NULL, v/
+    idquestion int NOT NULL, 
+
+    */
+
+    // Quiz variable de los datos del quiz
+
+    const [Answer, setAnswer] = useState({
+        Answers: [
+            {
+                option: '',
+                answer: '',
+                qualification: 0,
+                idquiz: '',
+                idquestion: 0
+            }
+        ]
+    });
+
+    function changerAnswer(indexQuestions, indexOptions){
+        let newdata = {...Answer};
+        const {idquiz} = Quiz.questions[indexQuestions];
+        const {option, qualification, idquestion} = Quiz.questions[indexQuestions].options[indexOptions];
+        const answer = Quiz.questions[indexQuestions]?.options[indexOptions]?.answer;
+        if(!newdata.Answers[indexQuestions]){
+            newdata.Answers[indexQuestions] = {
+                option: '',
+                answer: '',
+                qualification: 0,
+                idquiz: '',
+                idquestion: 0
+            }
+        }
+        newdata.Answers[indexQuestions] = {
+            option: option,
+            answer: answer,
+            qualification: qualification,
+            idquiz: idquiz,
+            idquestion: idquestion
+        }
+        setAnswer(newdata);
+    }
+
+    function handleSubmitAnswer(e){
+        e.preventDefault();
+        console.log(Answer);
+    }
+
     return(
-        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz, NumQuestion, setNumQuestion, AddQuestion, changerTitleQuiz, postQuiz}} >
+        <QuizContext.Provider value={{DataProfile, Quizzes, FilterQuizzes, FetchQuiz, Quiz, NumQuestion, setNumQuestion, AddQuestion, changerTitleQuiz, postQuiz ,changerAnswer, handleSubmitAnswer}} >
             {children}
         </QuizContext.Provider>
     );

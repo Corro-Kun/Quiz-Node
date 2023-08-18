@@ -6,20 +6,21 @@ import Question from "../Question/Question";
 
 function Exam(){
     const {id} = useParams();
-    const {Quiz, FetchQuiz} = useQuizContext();
+    const {Quiz, FetchQuiz , changerAnswer, handleSubmitAnswer} = useQuizContext();
     useEffect(() => {
         FetchQuiz(id);
     },[]);
+
     return(
         <div className="Render-Quiz" >
             <div className="Main-Quiz" >
-                <form action="#">
+                <form onSubmit={(e) => handleSubmitAnswer(e)}>
                     <div>
                         <h2 className="H2-Title" >{Quiz.title}</h2>
                         <p className="P-Author" >Por {Quiz.author}</p>
                         {
                             Quiz.questions?.map((questions, i)=>(
-                                <Question key={i} title={questions.question} options={questions.options} number={i + 1}/>
+                                <Question key={i} title={questions.question} options={questions.options} number={i + 1} indexQ={i} functionA={changerAnswer}/>
                             )) 
                         }
                     </div> 
