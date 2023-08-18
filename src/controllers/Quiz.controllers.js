@@ -74,7 +74,6 @@ export const MyQuiz = async (req, res) =>{
     }   
 }
 
-
 export const ViewQuiz = async (req, res) =>{
     try {
         const id = req.params.id;
@@ -103,36 +102,54 @@ export const ViewQuiz = async (req, res) =>{
 export const Answer = async (req, res)=>{
     try {
         const idquiz = req.params.idquiz;
-        const idquestion = req.params.idquestion;
         const id = req.user.id;
-        const ID = await genID(30);
+        let Questions = 0;
+        let AnswersCorrects = 0;
 
-        const option = req.body.option;
-        const answer = req.body.answer;
-        const qualification = req.body.qualification;
+        const answer = req.body.Answers;
 
-        const [result] = await sql.query('select * from answer where iduser = ? and idquestion = ?', [id, idquestion]);
+        const [result] = await sql.query('select * from answer where iduser = ? and idquiz = ?', [id, idquiz]);
 
         if(result.length > 0) return res.status(500).json({message: 'no puedes responder 2 veces la misma pregunta'});
 
-        await sql.query('insert into answer (id, option, answer, qualification, idquiz, idquestion, iduser) values (?, ?, ?, ?, ?, ?, ?);',[ID, option, answer, qualification, idquiz, idquestion, id]);
+        for(let i = 0; i < answer.length; i++){
+            const ID = genID(30);
+            await sql.query('insert into answer (id, option, answer, qualification, idquiz, idquestion, iduser) values (?, ?, ?, ?, ?, ?, ?);',[ID, answer[i].option, answer[i].answer, answer[i].qualification, answer[i].idquiz, answer[i].idquestion, id]);
+            Questions++;
+            AnswersCorrects = AnswersCorrects + answer[i].qualification;
+        }
 
-        res.status(200).json({message: 'Tu respuesta a sido publicada', id: ID})
+        const qualification = (AnswersCorrects/Questions)*100;
+
+        const idQuali = genID(30);
+
+        await sql.query('insert into qualification(id, questions, answers, qualification, idquiz, iduser) values(?,?,?,?,?,?);',[idQuali, Questions, AnswersCorrects, qualification, idquiz, id]);
+
+        res.status(200).json({message: 'Respuestas enviadas con exito'});
+
     } catch (error) {
         res.status(500).json('Ocurrio un error, '+ error);
     }
 }
+
+export const MyAnswers = async (req, res) =>{
+    try {
+        const id = req.user.id;
+        
+        const result = await sql.query('select * from qualification JOIN quiz ON quiz.id = qualification.idquiz where qualification.iduser = ?;',[id]);
+
+        res.status(200).json(result[0]);
+    } catch (error) {
+        res.status(500).json({message:'Ocurrio un error, '+ error});        
+    }
+}
+
 /*
-CREATE TABLE answer(
     id VARCHAR(30) NOT NULL PRIMARY KEY,
-    option VARCHAR(1) NOT NULL,
-    answer VARCHAR(100) NOT NULL,
-    qualification int NOT NULL,  
+    questions int NOT NULL,
+    answers int NOT NULL,
+    qualification FLOAT NOT NULL,
     idquiz VARCHAR(30) NOT NULL,
-    idquestion int NOT NULL,
     iduser VARCHAR(30) NOT NULL,
-    FOREIGN KEY(idquiz) REFERENCES quiz (id),
-    FOREIGN KEY(idquestion) REFERENCES question (id),
-    FOREIGN KEY(iduser) REFERENCES user (id)
-);
+ 
 */
